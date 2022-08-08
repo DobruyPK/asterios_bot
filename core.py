@@ -34,7 +34,7 @@ def calc_time_for_boss(boss_name, time):
             start_resp = time.date() + t_d
             ag_start_resp = start_resp - vl_current_time.date()
             message = f'''BOS DONT LIVE!
-resp {boss_name_vl} start {ag_start_resp} day later at  18:00
+resp {boss_name_vl} start {ag_start_resp.days} day later at  18:00
 resp end at {start_resp} 00: 00'''
         else:
             message = f'''BOSS {boss_name_vl} RESP TODAY AT 18:00 - 00:00'''
@@ -45,26 +45,34 @@ resp end at {start_resp} 00: 00'''
             start_resp = time.date() + t_d
             ag_start_resp = start_resp - vl_current_time.date()
             message = f'''BOS DONT LIVE!
-resp {boss_name_vl} start  {ag_start_resp} day later at 18:00
+resp {boss_name_vl} start  {ag_start_resp.days} day later at 18:00
 resp end at {start_resp} 00: 00'''
         else:
             message = f'''BOSS {boss_name_vl} RESP TODAY AT 18:00 - 00:00'''
     else:
         t_d = datetime.timedelta(hours=12)
-        if time + t_d < vl_current_time:
+        if time + t_d > vl_current_time:
             start_resp = time + t_d
             end_resp = time + 2 * t_d
+            ag_start_resp = start_resp - vl_current_time
+            message = (f'''BOS DONT LIVE!
+resp {boss_name_vl} start at {ag_start_resp} hours leater
+resp end {end_resp} hours later''')
+        elif time + 2*t_d < vl_current_time:
+            print(f'kill ({time})')
+            print(f'kill+ T_d ({time+t_d})')
+            print(f'kill+ 2*t_d({time+2*t_d})')
+            message = ('''BOS LIVE!''')
+        else:
+            print(f'kill ({time})')
+            print(f'kill+ T_d ({time+t_d})')
+            print(f'kill+ 2*t_d({time+2*t_d})')
+            start_resp = time + t_d
+            end_resp = start_resp + t_d
             ag_end_resp = end_resp - vl_current_time
             message = (f'''BOSS MAYBE LIVE?)
 resp {boss_name_vl} start  at {start_resp}
 resp end {ag_end_resp} hours later''')
-        else:
-            start_resp = time + t_d
-            end_resp = start_resp + t_d
-            ag_start_resp = start_resp - vl_current_time
-            message = (f'''BOS DONT LIVE!
-resp {boss_name_vl} start {ag_start_resp} hours later
-resp end {end_resp}''')
     return message
 
 # dney 10 resp 18: 00 do 00 00

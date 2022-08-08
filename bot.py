@@ -3,7 +3,7 @@ import parse
 from data_store import dataSaver
 from core import S_apic, apic, calc_time_for_boss
 
-bot = Bot(token="input_TOKEN")
+bot = Bot(token="TOKEEEENNN")
 dp = Dispatcher(bot)
 bos_tupe = ['Simple boss!', 'Drake apic boss', 'Apic boss']
 
@@ -23,7 +23,7 @@ async def start(message):
     keyboard = types.InlineKeyboardMarkup().add(inline_btn_s_boss)
     keyboard.add(inline_btn_a_boss)
     keyboard.add(inline_btn_Drake_apik)
-    await message.answer("Chose your boot", reply_markup=keyboard)
+    await message.answer("Chose your boos", reply_markup=keyboard)
 
 
 @dp.callback_query_handler(lambda c: c.data in bos_tupe)
@@ -62,6 +62,7 @@ async def resp_time(callback_query: types.CallbackQuery):
     boss = callback_query.data
     time = dataSaver._data[boss]
     message_info = calc_time_for_boss(boss, time)
+    # await callback_query.message.answer(callback_query.data)
     await callback_query.message.answer(message_info)
     await callback_query.answer((callback_query.data))
 
